@@ -20,6 +20,17 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-broker:29092
 
+  schemaregistry-ui:
+    image: landoop/schema-registry-ui
+    hostname: schemaregistry-ui
+    depends_on:
+      - schema-registry
+    ports:
+      - 8000:8000
+    environment:
+      SCHEMAREGISTRY_URL: http://192.168.5.65:8081
+      PROXY: "true"
+
   kafdrop:
     image: obsidiandynamics/kafdrop
     restart: "no"
@@ -32,17 +43,17 @@ services:
     depends_on:
       - "kafka-broker"
 
-  rest-proxy:
-    image: confluentinc/cp-kafka-rest:6.1.1
-    depends_on:
-      - kafka-broker
-      - schema-registry
-    ports:
-      - 8085:8085
-    hostname: rest-proxy
-    container_name: rest-proxy
-    environment:
-      KAFKA_REST_HOST_NAME: rest-proxy
-      KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
-      KAFKA_REST_LISTENERS: "http://0.0.0.0:8085"
-      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+#  rest-proxy:
+#    image: confluentinc/cp-kafka-rest:6.1.1
+#    depends_on:
+#      - kafka-broker
+#      - schema-registry
+#    ports:
+#      - 8085:8085
+#    hostname: rest-proxy
+#    container_name: rest-proxy
+#    environment:
+#      KAFKA_REST_HOST_NAME: rest-proxy
+#      KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
+#      KAFKA_REST_LISTENERS: "http://0.0.0.0:8085"
+#      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'

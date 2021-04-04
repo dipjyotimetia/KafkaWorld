@@ -3,11 +3,13 @@
 ## Topics, Partitions and Offsets
 
 **Topics: A particular stream of data**
+
 * Similar to a table of the database
 * You can have as many topics you can
 * A topic is identified by its name
 
 **Topics are split in partitions**
+
 * Each partition is ordered
 * Each message in partition will get an incremental ID called offset
 * Partition 0, 1, 2 ....
@@ -51,9 +53,9 @@ Example of topic B with 2 partitions
 * In case broker failure, Producers will automatically recover
   ![img.png](Docs/producer.png)
 * Producers can choose to receive acknowledgment of data writes.
-  * acks=0 Producer won't wait for acknowledgment (Possible data loss)
-  * acks=1 Producer will wait for leader acknowledgment (Limited data loss)
-  * acks=2 Leader & Replica acknowledgment (no data loss)
+    * acks=0 Producer won't wait for acknowledgment (Possible data loss)
+    * acks=1 Producer will wait for leader acknowledgment (Limited data loss)
+    * acks=2 Leader & Replica acknowledgment (no data loss)
 * Producer can choose to send a key with the message(string,num etc.)
 * If key==null data will sent round robin(broker 101 then 102 then 103)
 * If key is sent then all message for that key will send to same partition
@@ -79,3 +81,65 @@ Example of topic B with 2 partitions
 * Zookeeper manager brokers(keeps a list of them)
 * Zookeeper helps in performing leader election for partition
 * Zookeeper send notifications to kafka in case of any changes.
+
+## Schema Registry
+
+* Kafka takes bytes as an input and publishes them
+* No data verification
+* Schema registry rejects bat data
+* A common data format must be agreed upon
+* Apache avro as data format
+    * Data is fully typed
+    * Date is compressed automatically
+    * Schema comes along with the data
+    * Documentation is embedded in the schema
+    * Data can be read across any language
+    * Schema can be evolve over time in safe manner
+
+## Avro
+
+* Common Fields:
+    * Name: Name of the schema
+    * Namespace: (equivalent of package in java)
+    * Doc: Documentation to explain your schema
+    * Aliases: Optional other name for schema
+    * Fields
+        * Name: Name of field
+        * Doc: Documentation for that field
+        * Type: Data type for that field
+        * Default: Default value for that field
+    * Complex types:
+        * Enums
+          ```avroschema
+          {
+            "type": "enum",
+            "name": "Customer Status",
+            "symbols": ["BRONZE","SILVER","GOLD"]
+          }
+          ```
+        * Arrays
+          ```avroschema
+          {
+            "type": "array",
+            "items": "string"
+          }
+          ```
+        * Maps
+          ```avroschema
+          {
+            "type": "map",
+            "values": "string"
+          }
+          ```
+        * Unions
+          ```avroschema
+          {
+            "name": "middle_name",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": "null"
+          }
+          ```
+        * Calling other schema as type
