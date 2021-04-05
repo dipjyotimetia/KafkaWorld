@@ -1,24 +1,30 @@
 plugins {
     id 'java'
-    id "com.github.davidmc24.gradle.plugin.avro"
 }
 
-version 'unspecified'
+version '1.0'
 
 repositories {
     mavenCentral()
     gradlePluginPortal()
     maven { url "https://packages.confluent.io/maven/" }
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/dipjyotimetia/KafkaWorld")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
-
-    // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
     compile group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
     compile group: 'org.apache.avro', name: 'avro', version: '1.10.2'
     compile group: 'io.confluent', name: 'kafka-avro-serializer', version: '6.1.1'
+    implementation 'com.dip.avroschema:kafka:1.0'
 }

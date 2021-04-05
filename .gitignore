@@ -7,3 +7,5 @@ build
 /kafka-avro/build
 /kafka-consumer/build
 /kafka-publisher/build
+/gradle.properties
+/kafka-avro/gradle.properties
