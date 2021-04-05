@@ -87,14 +87,15 @@ Example of topic B with 2 partitions
 * Kafka takes bytes as an input and publishes them
 * No data verification
 * Schema registry rejects bat data
-* A common data format must be agreed upon
+* A common data format must be agreed upon   
+![img.png](Docs/schema_registry.png)  
 * Apache avro as data format
     * Data is fully typed
     * Date is compressed automatically
     * Schema comes along with the data
     * Documentation is embedded in the schema
     * Data can be read across any language
-    * Schema can be evolve over time in safe manner
+    * Schema can be evolved over time in safe manner
 
 ## Avro
 
@@ -143,3 +144,9 @@ Example of topic B with 2 partitions
           }
           ```
         * Calling other schema as type
+    
+## Kafka Rest Proxy
+
+* kafka is great for java based consumers/producers
+* Avro support for some languages isn't great, where JSON/HTTP requests are great.   
+![img.png](Docs/restproxy.png)
