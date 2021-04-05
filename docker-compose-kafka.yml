@@ -2,6 +2,10 @@ version: '3.8'
 
 services:
   kafka-broker:
+    image: vectorized/redpanda:v21.4.1
+    ports:
+    - 9092:9092
+    - 29092:29092
     entrypoint:
     - /usr/bin/rpk
     - redpanda
@@ -20,10 +24,6 @@ services:
     - --
     - --kernel-page-cache
     - '1'
-    image: vectorized/redpanda:v21.4.1
-    ports:
-    - 9092:9092
-    - 29092:29092
     #volumes:
     #- kafka-broker:/var/lib/redpanda/data
 
@@ -57,11 +57,11 @@ services:
       - kafka-broker
       - schema-registry
     ports:
-      - 8085:8085
+      - 8083:8083
     hostname: rest-proxy
     container_name: rest-proxy
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
-      KAFKA_REST_LISTENERS: "http://0.0.0.0:8085"
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8083"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
