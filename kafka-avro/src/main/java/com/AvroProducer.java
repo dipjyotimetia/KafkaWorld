@@ -1,6 +1,8 @@
 package com;
 
 import com.avro.Customer;
+import com.config.AppConfig;
+import com.typesafe.config.ConfigFactory;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -10,23 +12,35 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 public class AvroProducer {
+    Logger logger = LoggerFactory.getLogger(AvroProducer.class);
+    private AppConfig appConfig;
 
-    public static void main(String[] args) throws Exception{
-        Logger logger = LoggerFactory.getLogger(AvroProducer.class);
+    public static void main(String[] args) throws Exception {
+        AvroProducer producer = new AvroProducer();
+        producer.start();
+    }
 
-        String bootstrapServer = "127.0.0.1:9092";
+    private AvroProducer() {
+        appConfig = new AppConfig(ConfigFactory.load());
+    }
+
+    private Properties getKafkaStreamsConfig() {
         // Create producer properties
         Properties properties = new Properties();
         properties.setProperty(ProducerConfig.ACKS_CONFIG, "1");
         properties.setProperty(ProducerConfig.RETRIES_CONFIG, "10");
 
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getBootstrapServers());
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
-        properties.setProperty("schema.registry.url", "http://127.0.0.1:8081");
+        properties.setProperty("schema.registry.url", appConfig.getSchemaRegistryUrl());
+        return properties;
+    }
 
-        KafkaProducer<String, Customer> kafkaProducer = new KafkaProducer<String, Customer>(properties);
-        String topic = "customer-avro";
+    private void start() throws Exception {
+        Properties configProperty = getKafkaStreamsConfig();
+        KafkaProducer<String, Customer> kafkaProducer = new KafkaProducer<>(configProperty);
+        String topic = appConfig.getValidTopicName();
 
         for (int i = 0; i < 10; i++) {
             Thread.sleep(1000);
@@ -55,8 +69,6 @@ public class AvroProducer {
                 }
             });
         }
-
-
         kafkaProducer.flush();
         kafkaProducer.close();
     }
