@@ -1,5 +1,11 @@
 # Kafka
 
+## What is Apache Kafka?
+Apache Kafka is a framework implementation of a software bus using stream-processing. It is an open-source software platform developed by the Apache Software Foundation written in Scala and Java. 
+The project aims to provide a unified, high-throughput, low-latency platform for handling real-time data feeds. 
+Behind the scenes, Kafka is distributed, scales well, replicates data across brokers (servers), can survive broker downtime, and much more.
+![img.png](Docs/kafka.png)
+
 ## Topics, Partitions and Offsets
 
 **Topics: A particular stream of data**
@@ -88,7 +94,7 @@ Example of topic B with 2 partitions
 * No data verification
 * Schema registry rejects bat data
 * A common data format must be agreed upon   
-![img.png](Docs/schema_registry.png)  
+  ![img.png](Docs/schema_registry.png)
 * Apache avro as data format
     * Data is fully typed
     * Date is compressed automatically
@@ -99,6 +105,24 @@ Example of topic B with 2 partitions
 
 ## Avro
 
+Apache Avro is a data serialization system.
+* Avro provides:
+    * Rich data structures.
+    * A compact, fast, binary data format.
+    * A container file, to store persistent data.
+    * Remote procedure call (RPC).
+    * Simple integration with dynamic languages. Code generation is not required to read or write data files nor to use or implement RPC protocols. Code generation as an optional optimization, only worth implementing for statically typed languages.
+```avroschema
+{"namespace": "dip.avro",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "favorite_number",  "type": ["int", "null"]},
+    {"name": "favorite_color", "type": ["string", "null"]}
+  ]
+}
+```
 * Common Fields:
     * Name: Name of the schema
     * Namespace: (equivalent of package in java)
@@ -144,9 +168,17 @@ Example of topic B with 2 partitions
           }
           ```
         * Calling other schema as type
-    
+
 ## Kafka Rest Proxy
 
 * kafka is great for java based consumers/producers
-* Avro support for some languages isn't great, where JSON/HTTP requests are great.   
-![img.png](Docs/restproxy.png)
+* Avro support for some languages isn't great, where JSON/HTTP requests are great.
+* Reporting data to Kafka from any frontend app built in any language not supported by official Confluent clients
+* Ingesting messages into a stream processing framework that doesn’t yet support Kafka   
+  ![img.png](Docs/restproxy.png)
+* Perform a comprehensive set of administrative operations through REST APIs, including:
+    * Describe, list, and configure brokers
+    * Create, delete, describe, list, and configure topics
+    * Delete, describe, and list consumer groups
+    * Create, delete, describe, and list ACLs
+    * List partition reassignments  
