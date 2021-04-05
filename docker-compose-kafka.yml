@@ -2,12 +2,31 @@ version: '3.8'
 
 services:
   kafka-broker:
-    image: vectorized/redpanda:v21.3.7
+    image: vectorized/redpanda:v21.4.1
     ports:
-      - 9092:9092
-      - 29092:29092
-    hostname: kafka-broker
-    entrypoint: [/usr/bin/rpk, redpanda, start, --kafka-addr, "PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092", --advertise-kafka-addr, "PLAINTEXT://kafka-broker:29092,OUTSIDE://localhost:9092"]
+    - 9092:9092
+    - 29092:29092
+    entrypoint:
+    - /usr/bin/rpk
+    - redpanda
+    - start
+    - --smp
+    - '1'
+    - --reserve-memory
+    - 0M
+    - --overprovisioned
+    - --node-id
+    - '0'
+    - --kafka-addr
+    - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+    - --advertise-kafka-addr
+    - PLAINTEXT://kafka:29092,OUTSIDE://localhost:9092
+    - --
+    - --kernel-page-cache
+    - '1'
+    #volumes:
+    #- kafka-broker:/var/lib/redpanda/data
+
 
   schema-registry:
     image: confluentinc/cp-schema-registry:6.1.1
@@ -19,17 +38,6 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-broker:29092
-
-  schemaregistry-ui:
-    image: landoop/schema-registry-ui
-    hostname: schemaregistry-ui
-    depends_on:
-      - schema-registry
-    ports:
-      - 8000:8000
-    environment:
-      SCHEMAREGISTRY_URL: http://192.168.5.65:8081
-      PROXY: "true"
 
   kafdrop:
     image: obsidiandynamics/kafdrop
@@ -43,17 +51,17 @@ services:
     depends_on:
       - "kafka-broker"
 
-#  rest-proxy:
-#    image: confluentinc/cp-kafka-rest:6.1.1
-#    depends_on:
-#      - kafka-broker
-#      - schema-registry
-#    ports:
-#      - 8085:8085
-#    hostname: rest-proxy
-#    container_name: rest-proxy
-#    environment:
-#      KAFKA_REST_HOST_NAME: rest-proxy
-#      KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
-#      KAFKA_REST_LISTENERS: "http://0.0.0.0:8085"
-#      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest:6.1.1
+    depends_on:
+      - kafka-broker
+      - schema-registry
+    ports:
+      - 8083:8083
+    hostname: rest-proxy
+    container_name: rest-proxy
+    environment:
+      KAFKA_REST_HOST_NAME: rest-proxy
+      KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8083"
+      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
