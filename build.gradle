@@ -1,19 +1,35 @@
 plugins {
     // Apply the java plugin to add support for Java
     id 'java'
+    id "com.github.davidmc24.gradle.plugin.avro" version "1.1.0"
+    id("maven-publish")
+}
 
-    // Apply the application plugin to add support for building a CLI application.
-    id 'application'
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/dipjyotimetia/KafkaWorld"
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
 
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
+    mavenCentral()
     jcenter()
+    maven { url "https://packages.confluent.io/maven/" }
 }
 
 dependencies {
-    // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
     // Use JUnit test framework
@@ -21,4 +37,6 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
     compile group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
+    compile group: 'org.apache.avro', name: 'avro', version: '1.10.2'
+    compile group: 'io.confluent', name: 'kafka-avro-serializer', version: '6.1.1'
 }
