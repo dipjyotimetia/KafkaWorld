@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
+      - name: Test kafka
         run: ./gradlew test
         env:
           USERNAME: ${{ secrets.USERNAME }}
