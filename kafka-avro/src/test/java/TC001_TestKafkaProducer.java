@@ -25,6 +25,7 @@ public class TC001_TestKafkaProducer {
     @BeforeEach
     public void beforeTest() {
         kafkaContainer.start();
+        System.out.println("Starting kafka container");
     }
 
     @Test
@@ -35,10 +36,12 @@ public class TC001_TestKafkaProducer {
         // Create the producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, value);
+        System.out.println("Creating producer");
         // Send Data
         producer.send(record, (metadata, e) -> {
             // Execute every time record is successfully send
             if (e == null) {
+                System.out.println(String.valueOf(metadata.timestamp()));
                 Assert.assertEquals(topic, metadata.topic());
                 Assert.assertTrue(metadata.hasOffset());
                 Assert.assertTrue(metadata.hasTimestamp());
@@ -53,5 +56,6 @@ public class TC001_TestKafkaProducer {
     @AfterAll
     public void StopContainer() {
         kafkaContainer.stop();
+        System.out.println("Stopping kafka container");
     }
 }
