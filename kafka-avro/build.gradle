@@ -21,7 +21,6 @@ repositories {
 dependencies {
     implementation 'com.dip.avroschema:kafka:1.0'
     implementation 'com.google.guava:guava:29.0-jre'
-    testImplementation 'junit:junit:4.13'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
     implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
@@ -30,4 +29,11 @@ dependencies {
     implementation group: 'com.typesafe', name: 'config', version: '1.4.1'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+    testCompile "org.testcontainers:junit-jupiter:1.15.2"
+    testCompile "org.testcontainers:testcontainers:1.15.2"
+    testCompile "org.testcontainers:kafka:1.15.2"
 }
