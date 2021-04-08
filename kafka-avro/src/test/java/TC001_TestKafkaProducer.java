@@ -41,8 +41,8 @@ public class TC001_TestKafkaProducer {
         producer.send(record, (metadata, e) -> {
             // Execute every time record is successfully send
             if (e == null) {
-                System.out.println(String.valueOf(metadata.timestamp()));
-                Assert.assertEquals(topic, metadata.topic());
+                System.out.println(metadata.timestamp());
+                Assert.assertEquals("topics", metadata.topic());
                 Assert.assertTrue(metadata.hasOffset());
                 Assert.assertTrue(metadata.hasTimestamp());
             } else {
