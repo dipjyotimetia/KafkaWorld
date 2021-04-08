@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # give permission to Gradle to run the commands
     steps:
       - uses: actions/checkout@v2
       - name: Grant execute permission for gradlew
