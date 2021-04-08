@@ -2,21 +2,20 @@ package com;
 
 import com.avro.Customer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 
+@Slf4j
 public class AvroConsumer {
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger(AvroConsumer.class);
 
         String bootstrapServer = "127.0.0.1:9092";
         String groupId = "my-sixth-application";

@@ -1,17 +1,16 @@
 package com;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+
+@Slf4j
 public class Producer {
 
     public static void main(String[] args) {
-
-        Logger logger = LoggerFactory.getLogger(Producer.class);
 
         String bootstrapServer = "127.0.0.1:9092";
         // Create producer properties
@@ -36,13 +35,13 @@ public class Producer {
                 public void onCompletion(RecordMetadata metadata, Exception e) {
                     // Execute every time record is successfully send
                     if (e == null) {
-                        logger.info("Received new metadata. \n" +
+                        log.info("Received new metadata. \n" +
                                 "Topic: " + metadata.topic() + "\n" +
                                 "Partition: " + metadata.partition() + "\n" +
                                 "Offset: " + metadata.offset() + "\n" +
                                 "Timestamp: " + metadata.timestamp());
                     } else {
-                        logger.error("Error while producing" + e.getMessage());
+                        log.error("Error while producing" + e.getMessage());
                     }
                 }
             });

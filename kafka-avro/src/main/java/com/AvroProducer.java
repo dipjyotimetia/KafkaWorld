@@ -4,15 +4,14 @@ import com.avro.Customer;
 import com.config.AppConfig;
 import com.typesafe.config.ConfigFactory;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+@Slf4j
 public class AvroProducer {
-    Logger logger = LoggerFactory.getLogger(AvroProducer.class);
     private AppConfig appConfig;
 
     public static void main(String[] args) throws Exception {

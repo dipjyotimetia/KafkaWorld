@@ -1,13 +1,12 @@
 package com.kafka;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -15,11 +14,10 @@ import java.util.Properties;
 
 // Enable replay capability from a certain offset
 
+@Slf4j
 public class ConsumerWithAssignSeek {
 
     public static void main(String[] args) {
-
-        Logger logger = LoggerFactory.getLogger(ConsumerWithAssignSeek.class);
 
         String bootstrapServer = "127.0.0.1:9092";
         String topic = "second-topic";
@@ -55,14 +53,14 @@ public class ConsumerWithAssignSeek {
 
             for (ConsumerRecord<String, String> record : records) {
                 numOfMessagesReadSoFar += 1;
-                logger.info("Key: " + record.key() + ", Value: " + record.value());
-                logger.info("Partition: " + record.partition() + ", Offset: " + record.offset());
+                log.info("Key: " + record.key() + ", Value: " + record.value());
+                log.info("Partition: " + record.partition() + ", Offset: " + record.offset());
                 if (numOfMessagesReadSoFar >= numOfMessagesToRead) {
                     keepOnReading = false; // to exit the for loop
                     break;
                 }
             }
         }
-        logger.info("Existing the application");
+        log.info("Existing the application");
     }
 }

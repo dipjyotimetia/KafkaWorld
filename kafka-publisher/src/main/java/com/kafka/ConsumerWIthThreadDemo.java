@@ -1,5 +1,6 @@
 package com.kafka;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
+@Slf4j
 public class ConsumerWIthThreadDemo {
     public static void main(String[] args) {
 
@@ -26,7 +28,6 @@ public class ConsumerWIthThreadDemo {
     }
 
     private void run() {
-        Logger logger = LoggerFactory.getLogger(ConsumerWIthThreadDemo.class.getName());
 
         String bootstrapServer = "127.0.0.1:9092";
         String groupId = "my-sixth-application";
@@ -35,7 +36,7 @@ public class ConsumerWIthThreadDemo {
         // latch for dealing with multiple thread
         CountDownLatch latch = new CountDownLatch(1);
 
-        logger.info("Creating the consumer thread");
+        log.info("Creating the consumer thread");
         ConsumerThread myConsumerThread = new ConsumerThread(
                 latch, bootstrapServer, groupId, topic
         );
@@ -45,22 +46,22 @@ public class ConsumerWIthThreadDemo {
         myThread.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            logger.info("Caught shutdown hook");
+            log.info("Caught shutdown hook");
             myConsumerThread.shutdown();
             try {
                 latch.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            logger.info("Application has exited");
+            log.info("Application has exited");
         }));
 
         try {
             latch.await();
         } catch (InterruptedException e) {
-            logger.error("Application got interrupted" + e);
+            log.error("Application got interrupted" + e);
         } finally {
-            logger.info("Application is closing");
+            log.info("Application is closing");
         }
 
     }

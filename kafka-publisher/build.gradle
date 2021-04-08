@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-version 'unspecified'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -16,4 +16,6 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
     compile group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
