@@ -1,9 +1,9 @@
+import common.KafkaCore;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -21,6 +21,7 @@ public class TC001_TestKafkaProducer {
     final String value = "hello kafka";
 
     Properties properties = new Properties();
+    KafkaCore core = new KafkaCore();
 
     @BeforeEach
     public void beforeTest() {
@@ -34,26 +35,10 @@ public class TC001_TestKafkaProducer {
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         // Create the producer
-        KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, value);
-        System.out.println("Creating producer");
-        // Send Data
-        producer.send(record, (metadata, e) -> {
-            // Execute every time record is successfully send
-            if (e == null) {
-                System.out.println(metadata.timestamp());
-                Assert.assertEquals(topic, metadata.topic());
-                Assert.assertTrue(metadata.hasOffset());
-                Assert.assertTrue(metadata.hasTimestamp());
-            } else {
-                e.printStackTrace();
-            }
-        });
-        producer.flush();
-        producer.close();
+        core.CreateTopic(topic, value, properties);
     }
 
-    @AfterAll
+    @AfterEach
     public void StopContainer() {
         kafkaContainer.stop();
         System.out.println("Stopping kafka container");
