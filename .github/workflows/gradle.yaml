@@ -15,8 +15,6 @@ jobs:
         run: chmod +x gradlew
       - name: Docker compose kafka
         run: docker-compose -f docker-compose-kafka_latest.yml up -d
-      - name: Docker compose pubsub
-        run: docker-compose -f docker-compose-pubsub.yml up -d
       - name: Test kafka
         run: ./gradlew test
         env:

@@ -11,7 +11,16 @@ import java.util.concurrent.TimeUnit;
 
 public class PubSub {
 
-    public void createTopicExample(String projectId, String topicId, Config config) throws IOException {
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
+        Config config = new Config();
+        String projectId = "local-pubsub";
+        String topicId = "my-topic-3";
+
+        createTopicExample(projectId, topicId, config);
+        publisherExample(projectId, topicId, config);
+    }
+
+    public static void createTopicExample(String projectId, String topicId, Config config) throws IOException {
         try (TopicAdminClient topicAdminClient = TopicAdminClient.create(TopicAdminSettings.newBuilder()
                 .setTransportChannelProvider(config.ChannelProvider())
                 .setCredentialsProvider(config.CredentialProvider())
@@ -22,7 +31,7 @@ public class PubSub {
         }
     }
 
-    public void publisherExample(String projectId, String topicId, Config config)
+    public static void publisherExample(String projectId, String topicId, Config config)
             throws IOException, ExecutionException, InterruptedException {
 
         TopicName topicName = TopicName.of(projectId, topicId);
