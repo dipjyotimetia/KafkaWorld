@@ -8,3 +8,5 @@ rootProject.name = 'kafka'
 include 'kafka-publisher'
 include 'kafka-consumer'
 include 'kafka-avro'
+include 'PubSub'
+
