@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
@@ -81,7 +82,7 @@ public class ConsumerWIthThreadDemo {
             properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
             properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // "earliest/latest/none"
             consumer = new KafkaConsumer<String, String>(properties);
-            consumer.subscribe(Arrays.asList(topic));
+            consumer.subscribe(Collections.singletonList(topic));
         }
 
         @Override

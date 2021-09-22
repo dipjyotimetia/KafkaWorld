@@ -9,13 +9,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'com.google.guava:guava:30.1.1-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.13'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
-    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
-    implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
+    testImplementation 'junit:junit:4.13.2'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.8.0'
+    implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '2.8.0'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
