@@ -13,7 +13,7 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.5'
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
     implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
