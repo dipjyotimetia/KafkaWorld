@@ -1,0 +1,79 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      # Check for updates to GitHub Actions every weekday
+      interval: "monthly"
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      time: "10:00"
+      timezone: Australia/Melbourne
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+      - "automerge"
+    open-pull-requests-limit: 20
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/kafka-avro" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      time: "10:00"
+      timezone: Australia/Melbourne
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+      - "automerge"
+    open-pull-requests-limit: 20
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/kafka-consumer" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      time: "10:00"
+      timezone: Australia/Melbourne
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+      - "automerge"
+    open-pull-requests-limit: 20
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/kafka-publisher" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      time: "10:00"
+      timezone: Australia/Melbourne
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+      - "automerge"
+    open-pull-requests-limit: 20
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/kafka-spring" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      time: "10:00"
+      timezone: Australia/Melbourne
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+      - "automerge"
+    open-pull-requests-limit: 20
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/pubsub" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      time: "10:00"
+      timezone: Australia/Melbourne
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+      - "automerge"
+    open-pull-requests-limit: 20
