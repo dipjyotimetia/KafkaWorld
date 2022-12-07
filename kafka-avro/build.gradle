@@ -24,7 +24,7 @@ dependencies {
     implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '2.7.0'
     implementation group: 'org.apache.avro', name: 'avro', version: '1.10.2'
     implementation group: 'io.confluent', name: 'kafka-avro-serializer', version: '6.1.1'
-    implementation group: 'com.typesafe', name: 'config', version: '1.4.1'
+    implementation group: 'com.typesafe', name: 'config', version: '1.4.2'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.projectlombok:lombok:1.18.20'
