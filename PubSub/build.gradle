@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform('com.google.cloud:libraries-bom:19.2.1')
+    implementation platform('com.google.cloud:libraries-bom:26.2.0')
     implementation 'com.google.cloud:google-cloud-pubsub'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
