@@ -11,7 +11,7 @@ repositories {
 dependencies {
     implementation platform('com.google.cloud:libraries-bom:26.3.0')
     implementation 'com.google.cloud:google-cloud-pubsub'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
