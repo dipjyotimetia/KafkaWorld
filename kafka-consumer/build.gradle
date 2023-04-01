@@ -18,5 +18,5 @@ dependencies {
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '7.3.1-ce'
     implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '3.3.1'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
