@@ -13,7 +13,7 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13.2'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.9'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.11'
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '7.5.0-ce'
     implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '7.5.0-ce'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
