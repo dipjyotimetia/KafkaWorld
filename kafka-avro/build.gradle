@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     implementation 'com.dip.avroschema:kafka:1.0'
-    implementation 'com.google.guava:guava:32.1.2-jre'
+    implementation 'com.google.guava:guava:33.2.0-jre'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.9'
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '7.5.2-ce'
     implementation group: 'org.apache.kafka', name: 'kafka-streams', version: '7.5.3-ce'
